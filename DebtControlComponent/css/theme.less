@@ -1,0 +1,67 @@
+// Importa el tema base de Ant Design v4 (desde node_modules)
+@import "antd/lib/table/style/index.less";
+@import "antd/lib/pagination/style/index.less";
+@import "antd/lib/dropdown/style/index.less";
+@import "antd/lib/spin/style/index.less";
+@import "antd/lib/button/style/index.less";     // Botones
+@import "antd/lib/tooltip/style/index.less";    // Tooltip (puede incluir parte del dropdown/popover)
+@import "antd/lib/popover/style/index.less";    // Popover (filtros y overlays de tabla usan esto)
+@import "antd/lib/input/style/index.less";      // Inputs si tu filtro tiene cajas de texto o búsqueda
+@import "antd/lib/checkbox/style/index.less";
+@import "antd/lib/select/style/index.less";       // Selector tipo dropdown (usado internamente por página)
+@import "antd/lib/upload/style/index.less";
+@import "antd/lib/style/index.less";
+@import "antd/lib/modal/style/index.less";
+// Sobrescribe variables del tema base después del import
+@primary-color: #ffa51d;
+@link-color: #ffa51d;
+@success-color: #52c41a;
+@warning-color: #faad14;
+@error-color: #f5222d;
+@font-size-base: 14px;
+@heading-color: rgba(0, 0, 0, 0.85);
+@text-color: rgba(0, 0, 0, 0.65);
+@text-color-secondary: rgba(0, 0, 0, 0.45);
+@disabled-color: rgba(0, 0, 0, 0.25);
+@border-radius-base: 2px;
+@border-color-base: #d9d9d9;
+
+// Estilos personalizados de tu componente
+.mi-tabla-pcf .ant-table-row,
+.mi-tabla-pcf .ant-table-row > td,
+.mi-tabla-pcf .ant-table-cell {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+}
+
+/* Opcional, evita seleccionar encabezados */
+.mi-tabla-pcf .ant-table-thead,
+.mi-tabla-pcf .ant-table-thead * {
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
+
+.main-debt-control-container {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    gap: 10px;
+}
+/* Centrar el contenido vacío cuando no hay filas */
+.empty-placeholder-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%; 
+}
+
+body {
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+}
