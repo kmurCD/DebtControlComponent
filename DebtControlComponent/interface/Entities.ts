@@ -4,7 +4,7 @@ export interface ParsedData {
 }
 
 export interface ApiResponse {
-    response: string;
+    clientes: string;
     vendedores: string;
 }
 

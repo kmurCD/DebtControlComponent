@@ -1,15 +1,16 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { getClients } from "../service/getClients";
-import { Debt } from "../interface/Clientes";
+import { getClients } from "../service/ClientService";
+import { Debt,Seller } from "../interface/Entities";
 
 export const useDebts = () => {
   const [debts, setDebts] = useState<Debt[]>([]);
-  const [sellers, setSellers] = useState<string[]>([]);
+  const [sellers, setSellers] = useState<Seller[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const isFetchingRef = useRef(false);
 
   const fetchData = useCallback(async () => {
+
     if (isFetchingRef.current) {
       return;
     }
@@ -17,12 +18,13 @@ export const useDebts = () => {
     setLoading(true);
     setError(null);
     try {
-      console.log("[useDebts] fetchData start"); // para depurar
+      //Obtener datos de la API
       const result = await getClients();
+
+
       if (!result.error) {
-        setDebts(result.deudas);
-        const sellersUnicos = Array.from(new Set(result.deudas.map(d => d.vendedor)));
-        setSellers(sellersUnicos);
+        setDebts(result.Debts);
+        setSellers(result.Seller);
       } else {
         setError(result.error);
       }

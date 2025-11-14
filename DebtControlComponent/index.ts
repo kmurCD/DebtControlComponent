@@ -1,5 +1,6 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import MainDebtControl from "./components/MainDebtControl";
+import Message from "./components/ButtonsControl/Message/Message";  
 import * as React from "react";
 import "./css/antd-custom.css";
 export class DebtControlComponent implements ComponentFramework.ReactControl<IInputs, IOutputs> {
@@ -36,6 +37,7 @@ export class DebtControlComponent implements ComponentFramework.ReactControl<IIn
         return React.createElement(
             MainDebtControl
         );
+            
     }
 
     /**

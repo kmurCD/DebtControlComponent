@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IInputs } from "../generated/ManifestTypes";
 import DebtControlTable from "./table/DebtControlTable";
-import DebtControlButtons from "./DebtControlButtons";
+import ButtonsControl from "./ButtonsControl/ButtonsControl";
 import { useDebts } from "../hooks/useDebt";
 import { ConfigProvider,es_ES } from "../ant-custom-import";
 
@@ -28,7 +28,7 @@ const MainDebtControl: React.FC<IMainDebtControlProps> = ({ context }) => {
                 }}
             >
                 <div className="main-debt-control-container">
-                    <DebtControlButtons onRefresh={refresh} loading={loading} />
+                    <ButtonsControl onRefresh={refresh} loading={loading} />
                     <DebtControlTable
                         debts={debts}
                         sellers={sellers}

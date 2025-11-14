@@ -1,22 +1,22 @@
 import * as React from "react";
 import { Table, Tooltip } from "../../ant-custom-import";
 import type {TableProps } from "../../ant-custom-import";
-import { Debt } from "../../interface/Clientes";
+import { Debt ,Seller } from "../../interface/Entities";
 import TransligraLogo from "../table/TransligraLogo";
 
 type ColumnsType<T> = TableProps<T>["columns"];
 
 interface Props {
     debts: Debt[];
-    sellers: string[];
+    sellers: Seller[];
     loading: boolean;
     error: string | null;
 };
 
 const DebtControlTable: React.FC<Props> = ({ debts, sellers, loading, error }) => {
     const sellerFilters = sellers.map((seller) => ({
-        text: seller,
-        value: seller,
+        text: seller.vendedor,
+        value: seller.vendedor,
     }));
 
     const columns: ColumnsType<Debt> = [
@@ -58,8 +58,8 @@ const DebtControlTable: React.FC<Props> = ({ debts, sellers, loading, error }) =
             key: "vendedor",
             ellipsis: true,
             filters: sellerFilters,
-            onFilter: (value: string | number | boolean, record: Debt) =>
-                record.vendedor === value,
+            onFilter: (vendedor: string | number | boolean, record: Debt) =>
+                record.vendedor === vendedor,
         },
     ];
 
