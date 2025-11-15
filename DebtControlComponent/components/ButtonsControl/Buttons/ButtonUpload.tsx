@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button } from "../../../ant-custom-import";
-import { SyncOutlined } from "../../../ant-custom-icons-import";
+import { UploadOutlined } from "../../../ant-custom-icons-import";
 
 interface ButtonUploadProps {
    handleOpenUploadModal: () => void;
@@ -17,12 +17,7 @@ const ButtonUpload: React.FC<ButtonUploadProps> = ({
     return (
         <Button
             onClick={handleClickUpload}
-            style={{
-                borderRadius: 2,
-                fontWeight: "normal",
-                backgroundColor: "white",
-            }}
-            icon={<SyncOutlined style={{ fontSize: 14 }} />}          
+            icon={<UploadOutlined style={{ fontSize: 14 }} />}          
         >
             Subir Archivo
         </Button>

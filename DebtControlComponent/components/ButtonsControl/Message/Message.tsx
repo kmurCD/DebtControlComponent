@@ -13,7 +13,7 @@ interface MessageProps {
     visible: boolean;
     onClose?: () => void;
     duration?: number; // ms
-    type?: 'success' | 'info' | 'error' | 'loading';
+    type?:string;
 }
 
 const iconMap = {
@@ -28,7 +28,7 @@ const Message: React.FC<MessageProps> = ({
     visible,
     onClose,
     duration = 3000,
-    type = 'success',
+    type,
 }) => {
     const [show, setShow] = useState(visible);
 
@@ -50,7 +50,7 @@ const Message: React.FC<MessageProps> = ({
                 className={`message message-${type}${show ? ' animate-in' : ''}`}
                 style={{ display: show ? 'flex' : 'none' }}
             >
-                {iconMap[type]}
+                {iconMap[type as keyof typeof iconMap]}
                 <span>{mensaje}</span>
             </div>
         </div>

@@ -19,11 +19,6 @@ const ButtonRefresh: React.FC<ButtonRefreshProps> = ({
     return (
         <Button
             onClick={handleClickRefresh}
-            style={{
-                borderRadius: 2,
-                fontWeight: "normal",
-                backgroundColor: "white",
-            }}
             icon={<SyncOutlined style={{ fontSize: 14 }} />}
             loading={loading}
         >

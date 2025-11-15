@@ -5,7 +5,8 @@ import CheckCircleFilled from "@ant-design/icons/CheckCircleFilled";
 import InfoCircleFilled from "@ant-design/icons/InfoCircleFilled";
 import CloseCircleFilled from "@ant-design/icons/CloseCircleFilled";
 import LoadingOutlined from "@ant-design/icons/LoadingOutlined";
-
+import MailOutlined from "@ant-design/icons/MailOutlined";
+import NotificationOutlined from "@ant-design/icons/NotificationOutlined";
 export {
     SyncOutlined,
     UploadOutlined,
@@ -14,4 +15,6 @@ export {
     InfoCircleFilled,
     CloseCircleFilled,
     LoadingOutlined,
+    MailOutlined,
+    NotificationOutlined
 };

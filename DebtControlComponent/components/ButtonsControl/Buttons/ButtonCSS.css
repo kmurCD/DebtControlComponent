@@ -1,0 +1,20 @@
+/* ButtonSellerNotification.css */
+.button-seller-notification {
+    border-color: #FCA440 !important;
+    color: #FCA440 !important;
+}
+
+.button-seller-notification:hover {
+    background-color: #fed4a5a9 !important;
+    border-color: #FCA440 !important;
+    color: #FCA440 !important;
+}
+.button-client-notification{
+   border-color: #FD3A0F !important;
+    color: #FD3A0F !important;
+}
+.button-client-notification:hover {
+    background-color: #fe90777c !important;
+    border-color: #FD3A0F !important;
+    color: #FD3A0F !important;
+}
