@@ -1,12 +1,12 @@
 import * as React from "react";
-import { Modal, Upload, Button } from "../../../ant-custom-import";
+import { Modal, Upload, Button } from "../../../../ant-custom-import";
 import {
     UploadChangeParam,
     UploadFile,
     UploadProps,
 } from "antd/es/upload/interface";
-import { useUploadFile } from "../../../hooks/useUploadFile";
-import { UploadOutlined } from "../../../ant-custom-icons-import";
+import { useUploadFile } from "../../../../hooks/useUploadFile";
+import { UploadOutlined } from "../../../../ant-custom-icons-import";
 
 interface ModalUploadControlProps {
     openDialogUpload: boolean;
@@ -65,7 +65,7 @@ const UploadModal: React.FC<ModalUploadControlProps> = ({
     };
 
     const props: UploadProps = {
-        accept: ".xls, application/vnd.ms-excel",
+        accept: ".xls,application/vnd.ms-excel",
         onRemove: (file) => {
             setFileList([]);
             setFileValid(false);

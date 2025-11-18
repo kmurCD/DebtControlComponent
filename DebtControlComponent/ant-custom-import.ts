@@ -7,8 +7,13 @@ import Tooltip from "antd/es/tooltip";
 import type { TableProps } from "antd/es/table";
 import type { ButtonProps } from "antd/es/button";
 import Modal from "antd/es/modal";
-import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+import type { RcFile, UploadFile, UploadProps } from "antd/es/upload/interface";
 import Upload from "antd/es/upload";
+import Input from "antd/es/input";
+import Radio from "antd/es/radio";
+import Space from "antd/es/space";
+import Select from "antd/es/select";
+
 export {
     ConfigProvider,
     es_ES,
@@ -21,7 +26,9 @@ export {
     UploadFile,
     UploadProps,
     Upload,
-    RcFile
-    
-
+    RcFile,
+    Input,
+    Radio,
+    Space,
+    Select
 };

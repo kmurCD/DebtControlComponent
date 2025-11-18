@@ -1,0 +1,9 @@
+.radio-notification-seller {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 400;
+    cursor: pointer;
+}

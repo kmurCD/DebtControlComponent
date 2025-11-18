@@ -1,14 +1,14 @@
 import * as React from "react";
 import { Button } from "../../../ant-custom-import";
-import { NotificationOutlined } from "../../../ant-custom-icons-import";
+import { HistoryOutlined } from "../../../ant-custom-icons-import";
 import '../ButtonCSS.css';
 
-interface ButtonClientNotificationProps {
+interface ButtonHistoryProccesProps {
     onNotify: () => void;
     loading?: boolean;
 }
 
-const ButtonClientNotification: React.FC<ButtonClientNotificationProps> = ({
+const ButtonHistoryProcces: React.FC<ButtonHistoryProccesProps> = ({
     onNotify,
     loading = false,
 }) => {
@@ -20,12 +20,12 @@ const ButtonClientNotification: React.FC<ButtonClientNotificationProps> = ({
     return (
         <Button
             onClick={handleClickNotify}
-            className="button-client-notification"
-            icon={<NotificationOutlined style={{ fontSize: 14 }} />}
+            type="ghost"
+            className="button-history-procces button-sombra-personalizada"
+            icon={<HistoryOutlined style={{ fontSize: 14 }} />}
             loading={loading}
         >
-            Notificar Cliente
         </Button>
     );
 };
-export default ButtonClientNotification;
+export default ButtonHistoryProcces;

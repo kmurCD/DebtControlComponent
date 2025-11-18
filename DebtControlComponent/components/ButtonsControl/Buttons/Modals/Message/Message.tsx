@@ -5,7 +5,7 @@ import {
     InfoCircleFilled,
     CloseCircleFilled,
     LoadingOutlined
-} from "../../../ant-custom-icons-import";
+} from "../../../../../ant-custom-icons-import";
 import './Message.css';
 
 interface MessageProps {

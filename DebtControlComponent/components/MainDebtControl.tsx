@@ -28,7 +28,7 @@ const MainDebtControl: React.FC<IMainDebtControlProps> = ({ context }) => {
                 }}
             >
                 <div className="main-debt-control-container">
-                    <ButtonsControl onRefresh={refresh} loading={loading} />
+                    <ButtonsControl onRefresh={refresh} loading={loading} sellers={sellers} />
                     <DebtControlTable
                         debts={debts}
                         sellers={sellers}

@@ -1,20 +1,20 @@
 import * as React from "react";
 import { Button } from "../../../ant-custom-import";
 import { MailOutlined } from "../../../ant-custom-icons-import";
-import './ButtonCSS.css';
+import '../ButtonCSS.css';
 
 interface ButtonSellerNotificationProps {
-    onNotify: () => void;
+    handleNotificationSellerModal: () => void;
     loading?: boolean;
 }
 
 const ButtonSellerNotification: React.FC<ButtonSellerNotificationProps> = ({
-    onNotify,
+    handleNotificationSellerModal,
     loading = false,
 }) => {
 
     const handleClickNotify = (e: React.MouseEvent) => {
-        void onNotify();
+        void handleNotificationSellerModal();
     };
 
     return (
