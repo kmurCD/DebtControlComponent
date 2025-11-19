@@ -5,6 +5,7 @@ export const useUploadFile = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const isFetchingRef = useRef(false);
+    const [result, setResult] = useState<string | { error?: string } | null>(null);
 
     const startUpload = async (file: File, email: string) => {
         if (isFetchingRef.current) return;
@@ -13,6 +14,7 @@ export const useUploadFile = () => {
         setError(null);
         try {
             const result = (await uploadFile(file, email)) as { error?: string };
+            setResult(result);
             if (result.error) setError(result.error);
         } catch (err) {
             setError(err instanceof Error ? err.message : "Error desconocido");

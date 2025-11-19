@@ -20,7 +20,7 @@ const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
   loading = false,
   sellers
 }) => {
-  type AppContextType = {}; // Define with actual shape if needed
+  type AppContextType = Record<string, unknown>; // Define with actual shape if needed
   const AppContext = React.createContext<AppContextType | undefined>(undefined);
 
   const [isUploadModalOpen, setIsUploadModalOpen] = React.useState(false);

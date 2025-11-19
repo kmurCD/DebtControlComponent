@@ -33,13 +33,16 @@ const Message: React.FC<MessageProps> = ({
     const [show, setShow] = useState(visible);
 
     useEffect(() => {
+        let isMounted = true;
         if (visible) {
             setShow(true);
             const timer = setTimeout(() => {
                 setShow(false);
                 if (onClose) onClose();
             }, duration);
-            return () => clearTimeout(timer);
+            return () => { 
+                isMounted = false;
+                clearTimeout(timer);};
         }
         setShow(false);
     }, [visible, duration, onClose]);

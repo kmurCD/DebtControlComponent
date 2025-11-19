@@ -26,24 +26,22 @@ const UploadModal: React.FC<ModalUploadControlProps> = ({
     const [uploading, setUploading] = React.useState(false);
     const [fileValid, setFileValid] = React.useState<boolean>(false);
     const [validationMessage, setValidationMessage] = React.useState<string>("");
-    {
-        /*const handleUpload = async(email: string) => { */
-    }
-    const handleUpload = (email: string) => {
+
+    const handleUpload = async (email: string) => {
         if (fileList.length === 0) return;
         if (!fileValid) return; // don't upload invalid files
         setUploading(true);
         const uploadFile = fileList[0];
         const originFile = uploadFile?.originFileObj;
-        {
-            /*if (originFile) {
-                                                      await startUpload(originFile, email);
-                                                    
-                                                  }*/
+
+        if (originFile) {
+            await startUpload(originFile, email);
         }
+
         setFileList([]);
         setUploading(false);
-        if (onNotifyUpload) onNotifyUpload("Archivo subido exitosamente", "success");
+        if (onNotifyUpload)
+            onNotifyUpload("Archivo subido exitosamente", "success");
         if (onCloseUpload) onCloseUpload();
     };
 
