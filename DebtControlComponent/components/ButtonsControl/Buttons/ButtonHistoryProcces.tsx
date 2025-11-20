@@ -4,17 +4,17 @@ import { HistoryOutlined } from "../../../ant-custom-icons-import";
 import '../ButtonCSS.css';
 
 interface ButtonHistoryProccesProps {
-    onNotify: () => void;
+    handleOpenHistoryProcessModal: () => void;
     loading?: boolean;
 }
 
 const ButtonHistoryProcces: React.FC<ButtonHistoryProccesProps> = ({
-    onNotify,
+    handleOpenHistoryProcessModal,
     loading = false,
 }) => {
 
     const handleClickNotify = (e: React.MouseEvent) => {
-        void onNotify();
+        handleOpenHistoryProcessModal();
     };
 
     return (

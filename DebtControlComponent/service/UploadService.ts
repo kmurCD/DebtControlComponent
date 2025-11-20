@@ -1,10 +1,11 @@
 import axios from "axios";
 import { CONFIGDEV } from "./config";
+import { serviceResponse } from "../interface/Entities";
 
 export const uploadFile = async (
   file: File,
   email: string
-): Promise<unknown> => {
+): Promise<serviceResponse> => {
   function fileToBase64(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -26,5 +27,7 @@ export const uploadFile = async (
     }
   );
 
-  return response.data;
+  // Validar que la respuesta tenga la forma correcta
+  const data = response.data as serviceResponse;
+  return data;
 };

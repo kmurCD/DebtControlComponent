@@ -27,3 +27,19 @@ export interface Debt {
     correo_cliente: string | null;
     correo_vendedor: string;
 }
+export interface serviceResponse {
+    code: string;
+    message: string;
+}
+
+export interface ApiHistoryResponse {
+    process: string;
+}
+
+export interface HistoryProcess {   
+    id: number;
+    tipo: number;
+    estado: number;
+    codigo: string;
+ 
+}

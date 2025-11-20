@@ -7,7 +7,6 @@ import {
 } from "antd/es/upload/interface";
 import { useUploadFile } from "../../../../hooks/useUploadFile";
 import { UploadOutlined } from "../../../../ant-custom-icons-import";
-
 interface ModalUploadControlProps {
     openDialogUpload: boolean;
     onCloseUpload?: () => void;
@@ -21,28 +20,30 @@ const UploadModal: React.FC<ModalUploadControlProps> = ({
     onNotifyUpload,
     email = "josue.centella@tranligra.pe",
 }) => {
-    const { loading, error, startUpload } = useUploadFile();
+    const { startUpload } = useUploadFile();
     const [fileList, setFileList] = React.useState<UploadFile[]>([]);
     const [uploading, setUploading] = React.useState(false);
     const [fileValid, setFileValid] = React.useState<boolean>(false);
     const [validationMessage, setValidationMessage] = React.useState<string>("");
 
     const handleUpload = async (email: string) => {
-        if (fileList.length === 0) return;
-        if (!fileValid) return; // don't upload invalid files
+        if (fileList.length === 0 || !fileValid) return;
         setUploading(true);
         const uploadFile = fileList[0];
         const originFile = uploadFile?.originFileObj;
 
         if (originFile) {
-            await startUpload(originFile, email);
+            const result = await startUpload(originFile, email);
+            if (result) {
+                if (result.code === "200" && onNotifyUpload)
+                    onNotifyUpload("Archivo subido exitosamente", "success");
+                else if (onNotifyUpload) onNotifyUpload(result.message, "error");
+                if (onCloseUpload) onCloseUpload();
+            }
         }
 
         setFileList([]);
         setUploading(false);
-        if (onNotifyUpload)
-            onNotifyUpload("Archivo subido exitosamente", "success");
-        if (onCloseUpload) onCloseUpload();
     };
 
     const validateFile = (file: UploadFile | undefined) => {
@@ -131,7 +132,6 @@ const UploadModal: React.FC<ModalUploadControlProps> = ({
                             {validationMessage}
                         </p>
                     )}
-                    {error && <div style={{ color: "red", marginTop: 8 }}>{error}</div>}
                 </div>
                 <Upload {...props}>
                     <Button icon={<UploadOutlined />} disabled={uploading}>

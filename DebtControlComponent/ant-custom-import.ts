@@ -13,7 +13,7 @@ import Input from "antd/es/input";
 import Radio from "antd/es/radio";
 import Space from "antd/es/space";
 import Select from "antd/es/select";
-
+import Tag from "antd/es/tag";
 export {
     ConfigProvider,
     es_ES,
@@ -30,5 +30,6 @@ export {
     Input,
     Radio,
     Space,
-    Select
+    Select,
+    Tag,
 };

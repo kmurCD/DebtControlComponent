@@ -8,16 +8,19 @@ import ButtonHistoryProcces from "./Buttons/ButtonHistoryProcces";
 import Message from "./Buttons/Modals/Message/Message";
 import NotificationSellerModal from "./Buttons/Modals/NotificationSellerModal";
 import { Seller } from "../../interface/Entities";
+import HistoryProcessModal from "./Buttons/Modals/HistoryProcessModal";
 
 interface DebtControlButtonsProps {
-  onRefresh: () => Promise<void>;
-  loading?: boolean;
+  onRefreshDebts: () => Promise<void>;
+  onRefreshHistory?: () => Promise<void>;
+  loadingHistory?: boolean;
+  loadingDebts?: boolean;
   sellers: Seller[];
 }
 
 const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
-  onRefresh,
-  loading = false,
+  onRefreshDebts,
+  loadingDebts = false,
   sellers
 }) => {
   type AppContextType = Record<string, unknown>; // Define with actual shape if needed
@@ -25,7 +28,7 @@ const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
 
   const [isUploadModalOpen, setIsUploadModalOpen] = React.useState(false);
   const [isNotificationSellerModalOpen, setIsNotificationSellerModalOpen] = React.useState(false);
-
+  const [isHistoryProcessModalOpen, setIsHistoryProcessModalOpen] = React.useState(false);
 
   const [messageUpload, setMessageUpload] = React.useState<string | null>(null);
   const [messageVisible, setMessageVisible] = React.useState(false);
@@ -35,6 +38,7 @@ const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
   const handleCloseUploadModal = () => setIsUploadModalOpen(false);
   const handleOpenNotificationSellerModal = () => setIsNotificationSellerModalOpen(true);
   const handleCloseNotificationSellerModal = () => setIsNotificationSellerModalOpen(false);
+ 
   const handleMessageUpload = (message: string) => {
     setMessageUpload(message);
   };
@@ -42,14 +46,14 @@ const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
     setTypeMessage(type);
   };
   const handleClickRefresh = () => {
-    void onRefresh();
+    void onRefreshDebts();
   };
 
   return (
     <AppContext.Provider value={{}}>
     <div style={{ padding: 0, display: "flex", alignContent: "center"}}>
       <div style={{ width: "20%" , display: "flex", justifyContent: "start", alignItems: "center"}}>
-        <ButtonRefresh onRefresh={handleClickRefresh} loading={loading} />
+        <ButtonRefresh onRefresh={handleClickRefresh} loading={loadingDebts} />
       </div>
       <div style={{ width: "80%" , display: "flex", justifyContent: "end", alignItems: "center", gap: "5px" }}>
         <ButtonUpload handleOpenUploadModal={handleOpenUploadModal} />
@@ -62,8 +66,9 @@ const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
           }}
         />
         <ButtonHistoryProcces
-          onNotify={() => {
-            void 0;
+          handleOpenHistoryProcessModal={() => {
+            setIsHistoryProcessModalOpen(true)
+            
           }}
         />
       </div>
@@ -87,7 +92,14 @@ const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
         }}
       />
 
-      
+      <HistoryProcessModal
+        openDialogHistoryProcess={isHistoryProcessModalOpen }
+        onCloseHistoryProcess={() => {
+          setIsHistoryProcessModalOpen(false);
+        }}
+        historyProcess={[]} // Provide the appropriate historyProcess data here
+        loadingHistory={false}     // Set to actual loading state if available
+      />
       <Message
         visible={messageVisible}
         mensaje={messageUpload ?? ""}
