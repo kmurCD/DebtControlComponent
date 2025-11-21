@@ -10,6 +10,16 @@ interface IMainDebtControlProps {
     context: ComponentFramework.Context<IInputs>;
 }
 
+// Extracted styles as constants to prevent recreation on each render
+const containerStyle: React.CSSProperties = {
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    padding: 0,
+    margin: 0,
+};
+
 const MainDebtControl: React.FC<IMainDebtControlProps> = ({ context }) => {
     const {
         debts,
@@ -24,24 +34,14 @@ const MainDebtControl: React.FC<IMainDebtControlProps> = ({ context }) => {
         error: historyError,
         refresh: refreshHistory,
     } = useHistoryProcess();
+
     return (
         <ConfigProvider locale={es_ES}>
-            <div
-                style={{
-                    width: "100%",
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    padding: 0,
-                    margin: 0,
-                }}
-            >
+            <div style={containerStyle}>
                 <div className="main-debt-control-container">
                     <ButtonsControl
                         onRefreshDebts={refreshDebts}
                         loadingDebts={debtsLoading}
-                        onRefreshHistory={refreshHistory}
-                        loadingHistory={historyLoading}
                         sellers={sellers}
                     />
                     <DebtControlTable

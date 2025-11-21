@@ -2,7 +2,6 @@ import * as React from "react";
 import {
     Table,
     Tooltip,
-    Tag,
     Modal,
     Button,
 } from "../../../../ant-custom-import";
@@ -14,25 +13,20 @@ type ColumnsType<T> = TableProps<T>["columns"];
 
 interface Props {
     openDialogHistoryProcess: boolean;
-    historyProcess?: HistoryProcess[];
     onCloseHistoryProcess?: () => void;
-    loadingHistory?: boolean;
 }
 
 const DebtControlTable: React.FC<Props> = ({
     openDialogHistoryProcess,
-    loadingHistory,
     onCloseHistoryProcess,
 }) => {
     const { historyProcess, loading, error, refresh } = useHistoryProcess();
 
     React.useEffect(() => {
-    if (openDialogHistoryProcess) {
-      void refresh(); 
-    }
-}, [openDialogHistoryProcess, refresh]);
-
-
+        if (openDialogHistoryProcess) {
+            void refresh();
+        }
+    }, [openDialogHistoryProcess, refresh]);
 
     const columns: ColumnsType<HistoryProcess> = [
         {
@@ -101,7 +95,13 @@ const DebtControlTable: React.FC<Props> = ({
 
     return (
         <Modal
-            title="Historial de Procesos"
+            title={
+                <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                    <span>Historial de Procesos</span>
+                    <Button onClick={() => void refresh()}>Actualizar</Button>
+                </div>
+            }
+            maskClosable={false}
             open={openDialogHistoryProcess}
             onCancel={handleCancel}
             footer={[
@@ -122,7 +122,12 @@ const DebtControlTable: React.FC<Props> = ({
                     emptyText: (
                         <div className="empty-placeholder-content">
                             <TransligraLogo
-                                style={{ width: "500px", height: "auto", color: "#ffa51d", opacity: 0.5 }}
+                                style={{
+                                    width: "500px",
+                                    height: "auto",
+                                    color: "#ffa51d",
+                                    opacity: 0.5,
+                                }}
                             />
                         </div>
                     ),

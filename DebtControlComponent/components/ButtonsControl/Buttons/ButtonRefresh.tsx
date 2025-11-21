@@ -7,23 +7,21 @@ interface ButtonRefreshProps {
     loading?: boolean;
 }
 
+const iconStyle: React.CSSProperties = { fontSize: 14 };
+
 const ButtonRefresh: React.FC<ButtonRefreshProps> = ({
     onRefresh,
     loading = false,
 }) => {
-
-    const handleClickRefresh = (e: React.MouseEvent) => {
-        void onRefresh();
-    };
-
     return (
         <Button
-            onClick={handleClickRefresh}
-            icon={<SyncOutlined style={{ fontSize: 14 }} />}
+            onClick={onRefresh}
+            icon={<SyncOutlined style={iconStyle} />}
             loading={loading}
         >
             Recargar
         </Button>
     );
 };
+
 export default ButtonRefresh;

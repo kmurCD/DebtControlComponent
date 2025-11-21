@@ -3,24 +3,22 @@ import { Button } from "../../../ant-custom-import";
 import { UploadOutlined } from "../../../ant-custom-icons-import";
 
 interface ButtonUploadProps {
-   handleOpenUploadModal: () => void;
+    handleOpenUploadModal: () => void;
 }
 
+const iconStyle: React.CSSProperties = { fontSize: 14 };
+
 const ButtonUpload: React.FC<ButtonUploadProps> = ({
-    handleOpenUploadModal
+    handleOpenUploadModal,
 }) => {
-
-    const handleClickUpload = (e: React.MouseEvent) => {
-        handleOpenUploadModal();
-    };
-
     return (
         <Button
-            onClick={handleClickUpload}
-            icon={<UploadOutlined style={{ fontSize: 14 }} />}          
+            onClick={handleOpenUploadModal}
+            icon={<UploadOutlined style={iconStyle} />}
         >
             Subir Archivo
         </Button>
     );
 };
+
 export default ButtonUpload;

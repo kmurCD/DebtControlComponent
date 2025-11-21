@@ -33,7 +33,7 @@ export interface serviceResponse {
 }
 
 export interface ApiHistoryResponse {
-    process: string;
+    result: string;
 }
 
 export interface HistoryProcess {   

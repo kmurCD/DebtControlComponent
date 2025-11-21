@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Modal, Space, Radio, Select } from "../../../../ant-custom-import";
-import { useState, useMemo } from "react";
+import type { RadioChangeEvent } from "antd/es/radio";
+import { useState, useMemo, useCallback } from "react";
 import { Seller } from "../../../../interface/Entities";
 import { useNotification } from "../../../../hooks/useNotification";
 import "./ModalCSS.css";
@@ -11,6 +12,23 @@ interface ModalNotificationControlProps {
     onCloseUpload?: () => void;
     onNotifyUpload?: (mensaje: string, type: string) => void;
 }
+
+// Extracted styles as constants
+const labelStyle: React.CSSProperties = {
+    fontWeight: 500,
+    marginBottom: 8,
+};
+
+const radioGroupStyle: React.CSSProperties = {
+    display: "flex",
+    flexDirection: "column",
+    gap: 8,
+};
+
+const selectStyle: React.CSSProperties = {
+    width: "100%",
+    marginTop: 16,
+};
 
 const NotificationSellerModal: React.FC<ModalNotificationControlProps> = ({
     openDialogUpload,
@@ -30,7 +48,8 @@ const NotificationSellerModal: React.FC<ModalNotificationControlProps> = ({
             label: seller.vendedor,
         })), [sellers]
     );
-    const handleOk = () => {
+    // Memoize handleOk to prevent recreation on each render
+    const handleOk = useCallback(() => {
         if (typeNotification === 2 && !selectedSeller) {
             onNotifyUpload?.(
                 "Por favor, seleccione un vendedor específico para notificar.",
@@ -43,7 +62,7 @@ const NotificationSellerModal: React.FC<ModalNotificationControlProps> = ({
                 selectedSeller.correo_vendedor,
                 selectedSeller.vendedor
             );
-        }else {
+        } else {
             void startNotification();
         }
 
@@ -54,13 +73,23 @@ const NotificationSellerModal: React.FC<ModalNotificationControlProps> = ({
             "success"
         );
         onCloseUpload?.();
-    };
+    }, [typeNotification, selectedSeller, startNotification, onNotifyUpload, onCloseUpload]);
+
+    // Memoize radio change handler
+    const handleRadioChange = useCallback((e: RadioChangeEvent) => {
+        setTypeNotification(e.target.value as number);
+    }, []);
+
+    // Memoize select change handler
+    const handleSelectChange = useCallback((value: string) => {
+        setSelectedSeller(sellers.find((s) => s.vendedor === value));
+    }, [sellers]);
 
     return (
         <Modal
             open={openDialogUpload}
             onOk={handleOk}
-            title="Enviar Notificación"
+            title={ <span style={{ fontWeight: "normal" }}>Notificar Vendedor</span>}
             onCancel={onCloseUpload}
             width={500}
             centered
@@ -68,13 +97,13 @@ const NotificationSellerModal: React.FC<ModalNotificationControlProps> = ({
         >
             <Space direction="vertical" size="middle" style={{ width: "100%" }}>
                 <div>
-                    <div style={{ fontWeight: 500, marginBottom: 8 }}>
+                    <div style={labelStyle}>
                         Selecciona el tipo de notificación:
                     </div>
                     <Radio.Group
-                        onChange={(e) => setTypeNotification(e.target.value as number)}
+                        onChange={handleRadioChange}
                         defaultValue={2}
-                        style={{ display: "flex", flexDirection: "column", gap: 8 }}
+                        style={radioGroupStyle}
                     >
                         <Radio value={1}>Notificar a todos los vendedores</Radio>
                         <Radio value={2}>Notificar a un vendedor específico</Radio>
@@ -83,16 +112,11 @@ const NotificationSellerModal: React.FC<ModalNotificationControlProps> = ({
                     {typeNotification === 2 && (
                         <div>
                             <Select
-                                onChange={(value) => {
-                                    setSelectedSeller(
-                                        sellers.find((s) => s.vendedor === value)
-                                    );
-                                }}
-                                style={{ width: "100%", marginTop: 16 }}
+                                onChange={handleSelectChange}
+                                style={selectStyle}
                                 placeholder="Selecciona un vendedor"
                                 disabled={typeNotification !== 2}
                                 options={sellerOptions}
-                                // Si quieres que el valor seleccionado sea visible correctamente
                                 value={selectedSeller?.vendedor}
                             />
                         </div>

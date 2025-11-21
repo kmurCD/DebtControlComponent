@@ -10,7 +10,7 @@ export const getHistoryProcess = async (): Promise<{
 }> => {
     try {
         const r = await axios.get<ApiHistoryResponse>(CONFIGDEV.getProcessHistory);
-        const c: HistoryProcess[] = r.data.process ? JSON.parse(r.data.process) as HistoryProcess[] : [];
+        const c: HistoryProcess[] = r.data.result ? JSON.parse(r.data.result) as HistoryProcess[] : [];
         console.log(r.data);
         return { historyProcess: c, loading: false, error: null };
 

@@ -12,105 +12,128 @@ import HistoryProcessModal from "./Buttons/Modals/HistoryProcessModal";
 
 interface DebtControlButtonsProps {
   onRefreshDebts: () => Promise<void>;
-  onRefreshHistory?: () => Promise<void>;
-  loadingHistory?: boolean;
   loadingDebts?: boolean;
   sellers: Seller[];
 }
 
+const containerStyle: React.CSSProperties = {
+  padding: 0,
+  display: "flex",
+  alignContent: "center",
+};
+
+const leftSectionStyle: React.CSSProperties = {
+  width: "20%",
+  display: "flex",
+  justifyContent: "start",
+  alignItems: "center",
+};
+
+const rightSectionStyle: React.CSSProperties = {
+  width: "80%",
+  display: "flex",
+  justifyContent: "end",
+  alignItems: "center",
+  gap: "5px",
+};
+
 const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
   onRefreshDebts,
   loadingDebts = false,
-  sellers
+  sellers,
 }) => {
-  type AppContextType = Record<string, unknown>; // Define with actual shape if needed
-  const AppContext = React.createContext<AppContextType | undefined>(undefined);
-
   const [isUploadModalOpen, setIsUploadModalOpen] = React.useState(false);
-  const [isNotificationSellerModalOpen, setIsNotificationSellerModalOpen] = React.useState(false);
-  const [isHistoryProcessModalOpen, setIsHistoryProcessModalOpen] = React.useState(false);
+  const [isNotificationSellerModalOpen, setIsNotificationSellerModalOpen] =
+    React.useState(false);
+  const [isHistoryProcessModalOpen, setIsHistoryProcessModalOpen] =
+    React.useState(false);
 
   const [messageUpload, setMessageUpload] = React.useState<string | null>(null);
   const [messageVisible, setMessageVisible] = React.useState(false);
   const [typeMessage, setTypeMessage] = React.useState<string>("success");
 
-  const handleOpenUploadModal = () => setIsUploadModalOpen(true);
-  const handleCloseUploadModal = () => setIsUploadModalOpen(false);
-  const handleOpenNotificationSellerModal = () => setIsNotificationSellerModalOpen(true);
-  const handleCloseNotificationSellerModal = () => setIsNotificationSellerModalOpen(false);
- 
-  const handleMessageUpload = (message: string) => {
-    setMessageUpload(message);
-  };
-  const handleTypeMessage = (type: string) => {
-    setTypeMessage(type);
-  };
-  const handleClickRefresh = () => {
+  const handleOpenUploadModal = React.useCallback(
+    () => setIsUploadModalOpen(true),
+    []
+  );
+  const handleCloseUploadModal = React.useCallback(
+    () => setIsUploadModalOpen(false),
+    []
+  );
+  const handleOpenNotificationSellerModal = React.useCallback(
+    () => setIsNotificationSellerModalOpen(true),
+    []
+  );
+  const handleCloseNotificationSellerModal = React.useCallback(
+    () => setIsNotificationSellerModalOpen(false),
+    []
+  );
+  const handleOpenHistoryProcessModal = React.useCallback(
+    () => setIsHistoryProcessModalOpen(true),
+    []
+  );
+  const handleCloseHistoryProcessModal = React.useCallback(
+    () => setIsHistoryProcessModalOpen(false),
+    []
+  );
+
+  const handleClickRefresh = React.useCallback(() => {
     void onRefreshDebts();
-  };
+  }, [onRefreshDebts]);
+
+  const handleNotification = React.useCallback(
+    (message: string, type: string) => {
+      setMessageUpload(message);
+      setTypeMessage(type);
+      setMessageVisible(true);
+    },
+    []
+  );
+
+  const handleCloseMessage = React.useCallback(() => {
+    setMessageVisible(false);
+    setMessageUpload(null);
+  }, []);
+
 
   return (
-    <AppContext.Provider value={{}}>
-    <div style={{ padding: 0, display: "flex", alignContent: "center"}}>
-      <div style={{ width: "20%" , display: "flex", justifyContent: "start", alignItems: "center"}}>
+    <div style={containerStyle}>
+      <div style={leftSectionStyle}>
         <ButtonRefresh onRefresh={handleClickRefresh} loading={loadingDebts} />
       </div>
-      <div style={{ width: "80%" , display: "flex", justifyContent: "end", alignItems: "center", gap: "5px" }}>
+      <div style={rightSectionStyle}>
         <ButtonUpload handleOpenUploadModal={handleOpenUploadModal} />
-        <ButtonSellerNotification 
+        <ButtonSellerNotification
           handleNotificationSellerModal={handleOpenNotificationSellerModal}
         />
-        <ButtonClientNotification
-          onNotify={() => {
-            void 0;
-          }}
-        />
+        <ButtonClientNotification />
         <ButtonHistoryProcces
-          handleOpenHistoryProcessModal={() => {
-            setIsHistoryProcessModalOpen(true)
-            
-          }}
+          handleOpenHistoryProcessModal={handleOpenHistoryProcessModal}
         />
       </div>
       <UploadModal
         openDialogUpload={isUploadModalOpen}
         onCloseUpload={handleCloseUploadModal}
-        onNotifyUpload={(message: string, type: string) => {
-          handleMessageUpload(message);
-          handleTypeMessage(type);
-          setMessageVisible(true);
-        }}
+        onNotifyUpload={handleNotification}
       />
       <NotificationSellerModal
         sellers={sellers}
         openDialogUpload={isNotificationSellerModalOpen}
         onCloseUpload={handleCloseNotificationSellerModal}
-        onNotifyUpload={(message: string, type: string) => {
-          handleMessageUpload(message);
-          handleTypeMessage(type);
-          setMessageVisible(true);
-        }}
+        onNotifyUpload={handleNotification}
       />
-
       <HistoryProcessModal
-        openDialogHistoryProcess={isHistoryProcessModalOpen }
-        onCloseHistoryProcess={() => {
-          setIsHistoryProcessModalOpen(false);
-        }}
-        historyProcess={[]} // Provide the appropriate historyProcess data here
-        loadingHistory={false}     // Set to actual loading state if available
+        openDialogHistoryProcess={isHistoryProcessModalOpen}
+        onCloseHistoryProcess={handleCloseHistoryProcessModal}
       />
       <Message
         visible={messageVisible}
         mensaje={messageUpload ?? ""}
         type={typeMessage}
-        onClose={() => {
-          setMessageVisible(false);
-          setMessageUpload(null);
-        }}
+        onClose={handleCloseMessage}
       />
     </div>
-    </AppContext.Provider>
   );
 };
+
 export default ButtonsControl;
