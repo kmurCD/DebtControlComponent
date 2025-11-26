@@ -160,8 +160,8 @@ const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
         onCloseHistoryProcess={handleCloseHistoryProcessModal}
       />
       <NotificationClientsModal 
-                open={isModalOpen}
-                onClose={handleCloseModal}
+                openDialogNotificationClient={isModalOpen}
+                onCloseNotificacionClient={handleCloseModal}
                 onConfirm={handleConfirmSend}
                 debts={debts}
                 

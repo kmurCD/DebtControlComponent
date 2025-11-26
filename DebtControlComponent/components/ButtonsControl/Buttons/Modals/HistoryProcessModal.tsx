@@ -45,8 +45,34 @@ const DebtControlTable: React.FC<Props> = ({
                 </Tooltip>
             ),
         },
-        { title: "Tipo", dataIndex: "tipo", key: "tipo" },
+        {
+            title: "Tipo", dataIndex: "tipo", key: "tipo", render: (tipo: number) => {
+                const tipoInfo = tipoMap[tipo] || {
+                    label: "Desconocido",
+                    color: "#6c757d",
+                    bg: "#f8f9fa",
+                };
+                return (
+                    <span
+                        style={{
+                            color: tipoInfo.color,
+                            backgroundColor: tipoInfo.bg,
+                            borderRadius: 8,
+                            padding: "2px 10px",
+                            fontWeight: 500,
+                            fontSize: 13,
+                            display: "inline-block",
+                            minWidth: 120,
+                            textAlign: "center",
+                        }}
+                    >
+                        {tipoInfo.label}
+                    </span>
+                );
+            },
+        },
 
+        { title: "Fecha", dataIndex: "fecha_proceso", key: "fecha_proceso" },
         { title: "Código", dataIndex: "codigo", key: "codigo" },
 
         {
@@ -109,7 +135,7 @@ const DebtControlTable: React.FC<Props> = ({
                     Return
                 </Button>,
             ]}
-            width={800}
+            width={900}
         >
             <Table<HistoryProcess>
                 columns={columns}
@@ -123,7 +149,7 @@ const DebtControlTable: React.FC<Props> = ({
                         <div className="empty-placeholder-content">
                             <TransligraLogo
                                 style={{
-                                    width: "500px",
+                                    width: "600px",
                                     height: "auto",
                                     color: "#ffa51d",
                                     opacity: 0.5,
@@ -150,6 +176,13 @@ const estadoMap: Record<number, { label: string; color: string; bg: string }> =
     2: { label: "Cancelado", color: "#fa8c16", bg: "#fff7e6" },
     3: { label: "Completado", color: "#52c41a", bg: "#f6ffed" },
     4: { label: "Error", color: "#ff4d4f", bg: "#fff1f0" },
+};
+
+const tipoMap: Record<number, { label: string; color: string; bg: string }> = {
+    1: { label: "Actualizacion BD", color: "#0d6efd", bg: "#d1ecf1" },
+    2: { label: "Notificar vendedores", color: "#198754", bg: "#d4edda" },
+    3: { label: "Notificar vendedor", color: "#fd7e14", bg: "#fff3cd" },
+    4: { label: "Notificar Clientes", color: "#dc3545", bg: "#f8d7da" },
 };
 
 export default DebtControlTable;

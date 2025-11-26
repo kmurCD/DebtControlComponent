@@ -53,7 +53,7 @@ const NotificationSellerModal: React.FC<ModalNotificationControlProps> = ({
     const handleOk = useCallback(() => {
         if (typeNotification === 1) {
             // Fire-and-forget
-            startNotification();
+            void startNotification();
             onNotifyUpload?.("Notificación enviada a todos los vendedores", "success");
         } else if (typeNotification === 2) {
             if (!selectedSeller) {
@@ -64,7 +64,7 @@ const NotificationSellerModal: React.FC<ModalNotificationControlProps> = ({
                 return;
             }
             // Fire-and-forget
-            startNotification(
+            void startNotification(
                 selectedSeller.correo_vendedor,
                 selectedSeller.vendedor
             );

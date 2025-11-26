@@ -41,5 +41,6 @@ export interface HistoryProcess {
     tipo: number;
     estado: number;
     codigo: string;
+    fecha_proceso: string;
  
 }

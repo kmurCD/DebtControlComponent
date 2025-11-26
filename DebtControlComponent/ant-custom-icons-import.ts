@@ -8,6 +8,7 @@ import LoadingOutlined from "@ant-design/icons/LoadingOutlined";
 import MailOutlined from "@ant-design/icons/MailOutlined";
 import NotificationOutlined from "@ant-design/icons/NotificationOutlined";
 import HistoryOutlined from "@ant-design/icons/HistoryOutlined";
+import ExclamationCircleOutlined from "@ant-design/icons/ExclamationCircleOutlined";
 export {
   SyncOutlined,
   UploadOutlined,
@@ -19,4 +20,6 @@ export {
   MailOutlined,
   NotificationOutlined,
   HistoryOutlined,
+  ExclamationCircleOutlined,
 };
+

@@ -8,32 +8,51 @@ import {
 import {
     ExclamationCircleOutlined,
     CloseCircleFilled,
-} from "@ant-design/icons";
+} from "../../../../ant-custom-icons-import";
 import { Debt } from "../../../../interface/Entities";
+import { useNotificationClients } from "../../../../hooks/useNotificationClients";
 
 // Definimos una interfaz básica para el Cliente (ajústala a tu entidad real)
 
 interface ModalNotificationClientsProps {
-    open: boolean;
-    onClose: () => void;
-    onConfirm: () => void;
+    openDialogNotificationClient: boolean;
+    onCloseNotificacionClient: () => void;
+    onConfirm?: () => void;
     debts?: Debt[];
     loading?: boolean;
+    onNotifyUpload?: (mensaje: string, type: string) => void;
+    userEmail?: string;
 }
 
 // Elimina la destructuración de Text, usa Typography.Text directamente
 
-const NotificationClientsModal: React.FC<ModalNotificationClientsProps> = (
-    props
-) => {
-    const { open, onClose, onConfirm, debts, loading = false } = props;
+const NotificationClientsModal: React.FC<ModalNotificationClientsProps> = ({
+    openDialogNotificationClient,
+    onCloseNotificacionClient,
+    onConfirm,
+    debts,
+    loading,
+    onNotifyUpload,
+}) => {
+    const {
+        loading: hookLoading,
+        error,
+        startNotificationClient,
+    } = useNotificationClients();
+
+    const handleConfirm = React.useCallback(() => {
+        void startNotificationClient("josue.centella@transligra.pe");
+        onNotifyUpload?.("Notificación enviada a todos los vendedores", "success");
+
+        onCloseNotificacionClient?.();
+    }, [startNotificationClient, onNotifyUpload, onCloseNotificacionClient]);
 
     const totalClients = debts ? new Set(debts.map((debt) => debt.ruc)).size : 0;
 
     return (
         <Modal
-            open={open}
-            onCancel={onClose}
+            open={openDialogNotificationClient}
+            onCancel={onCloseNotificacionClient}
             width={500}
             centered
             maskClosable={false}
@@ -48,15 +67,19 @@ const NotificationClientsModal: React.FC<ModalNotificationClientsProps> = (
                 </Space>
             }
             footer={[
-                <Button key="back" onClick={onClose} disabled={loading}>
+                <Button
+                    key="back"
+                    onClick={onCloseNotificacionClient}
+                    disabled={loading ?? hookLoading}
+                >
                     Cancelar
                 </Button>,
                 <Button
                     key="submit"
                     type="primary"
                     danger
-                    onClick={onConfirm}
-                    loading={loading}
+                    onClick={handleConfirm}
+                    loading={loading ?? hookLoading}
                     style={{ backgroundColor: "#f5222d", borderColor: "#f5222d" }}
                 >
                     Confirmar y Enviar
