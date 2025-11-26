@@ -6,11 +6,12 @@ import { Seller } from "../../../../interface/Entities";
 import { useNotification } from "../../../../hooks/useNotification";
 import "./ModalCSS.css";
 
+import type { MessageType } from '../../../../types/MessageType';
 interface ModalNotificationControlProps {
     sellers: Seller[];
     openDialogUpload: boolean;
     onCloseUpload?: () => void;
-    onNotifyUpload?: (mensaje: string, type: string) => void;
+    onNotifyUpload?: (mensaje: string, type: MessageType) => void;
 }
 
 // Extracted styles as constants
@@ -50,28 +51,29 @@ const NotificationSellerModal: React.FC<ModalNotificationControlProps> = ({
     );
     // Memoize handleOk to prevent recreation on each render
     const handleOk = useCallback(() => {
-        if (typeNotification === 2 && !selectedSeller) {
-            onNotifyUpload?.(
-                "Por favor, seleccione un vendedor específico para notificar.",
-                "error"
-            );
-            return;
-        }
-        if (typeNotification === 2 && selectedSeller) {
-            void startNotification(
+        if (typeNotification === 1) {
+            // Fire-and-forget
+            startNotification();
+            onNotifyUpload?.("Notificación enviada a todos los vendedores", "success");
+        } else if (typeNotification === 2) {
+            if (!selectedSeller) {
+                onNotifyUpload?.(
+                    "Por favor, seleccione un vendedor específico para notificar.",
+                    "error"
+                );
+                return;
+            }
+            // Fire-and-forget
+            startNotification(
                 selectedSeller.correo_vendedor,
                 selectedSeller.vendedor
             );
-        } else {
-            void startNotification();
+            onNotifyUpload?.(
+                `Notificación enviada a: ${selectedSeller.vendedor}`,
+                "success"
+            );
         }
 
-        onNotifyUpload?.(
-            typeNotification === 1
-                ? "Notificación enviada a todos los vendedores"
-                : `Notificación enviada a: ${selectedSeller?.vendedor}`,
-            "success"
-        );
         onCloseUpload?.();
     }, [typeNotification, selectedSeller, startNotification, onNotifyUpload, onCloseUpload]);
 

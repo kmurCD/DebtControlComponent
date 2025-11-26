@@ -40,6 +40,7 @@ const MainDebtControl: React.FC<IMainDebtControlProps> = ({ context }) => {
             <div style={containerStyle}>
                 <div className="main-debt-control-container">
                     <ButtonsControl
+                        debts={debts}
                         onRefreshDebts={refreshDebts}
                         loadingDebts={debtsLoading}
                         sellers={sellers}

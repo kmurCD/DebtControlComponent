@@ -14,6 +14,9 @@ import Radio from "antd/es/radio";
 import Space from "antd/es/space";
 import Select from "antd/es/select";
 import Tag from "antd/es/tag";
+import Typography from "antd/es/typography";
+
+
 export {
     ConfigProvider,
     es_ES,
@@ -32,4 +35,5 @@ export {
     Space,
     Select,
     Tag,
+    Typography
 };

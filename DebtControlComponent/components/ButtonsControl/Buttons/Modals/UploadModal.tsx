@@ -8,10 +8,11 @@ import {
 import { useUploadFile } from "../../../../hooks/useUploadFile";
 import { UploadOutlined } from "../../../../ant-custom-icons-import";
 
+import type { MessageType } from '../../../../types/MessageType';
 interface ModalUploadControlProps {
     openDialogUpload: boolean;
     onCloseUpload?: () => void;
-    onNotifyUpload?: (message: string, type: string) => void;
+    onNotifyUpload?: (message: string, type: MessageType) => void;
     email?: string;
 }
 

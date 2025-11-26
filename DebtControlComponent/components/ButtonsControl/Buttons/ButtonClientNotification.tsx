@@ -5,25 +5,23 @@ import "../ButtonCSS.css";
 
 interface ButtonClientNotificationProps {
     loading?: boolean;
+    onClick?: () => void;
 }
 
 const iconStyle: React.CSSProperties = { fontSize: 14 };
-const hanledNotifyClient = () => {
-    console.log("Notificar al cliente");
-}
 const ButtonClientNotification: React.FC<ButtonClientNotificationProps> = ({
     loading = false,
+    onClick,
 }) => {
     return (
         <Button
-            onClick={hanledNotifyClient}
+            onClick={onClick}
             className="button-client-notification"
             icon={<NotificationOutlined style={iconStyle} />}
             loading={loading}
         >
             Notificar Cliente
         </Button>
-        
     );
 };
 

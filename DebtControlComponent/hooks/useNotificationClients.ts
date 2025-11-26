@@ -1,12 +1,12 @@
 import { useState, useCallback, useRef } from "react";
-import { notificationSeller, notificationAllSellers } from "../service/NotificationService";
+import { notificationClients } from "../service/NotificationService";
 
-export const useNotification = () => {
+export const useNotificationClients = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const isFetchingRef = useRef(false);
 
-    const startNotification = useCallback(async (sellerEmail?: string, nameSeller?: string): Promise<boolean> => {
+    const startNotificationClient = useCallback(async (userEmail?: string): Promise<boolean> => {
         if (isFetchingRef.current) return false;
         isFetchingRef.current = true;
         setLoading(true);
@@ -14,16 +14,14 @@ export const useNotification = () => {
 
         try {
    
-            let result: string | { error?: string };
+            let result: string | { error?: string } = {};
 
-            if (sellerEmail && nameSeller) {
-                result = await notificationSeller(nameSeller, sellerEmail);
-            } else {
-                result = await notificationAllSellers();
-            }
+            if (userEmail ) {
+                result = await notificationClients(userEmail);
+            } 
 
-            if (result?.error) {
-                setError(result.error);
+            if ((result as { error?: string })?.error) {
+                setError((result as { error?: string }).error!);
                 return false;
             }
             return true;
@@ -37,8 +35,8 @@ export const useNotification = () => {
     }, []);
 
     const notifyAllSellers = useCallback(async () => {
-        await startNotification();
-    }, [startNotification]);
+        await startNotificationClient();
+    }, [startNotificationClient]);
 
-    return { loading, error, startNotification, notifyAllSellers };
+    return { loading, error, startNotificationClient, notifyAllSellers };
 };

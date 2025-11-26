@@ -1,4 +1,7 @@
 import * as React from "react";
+// Define MessageType here if the import is missing
+import type { MessageType } from '../../types/MessageType';
+import { Button } from "../../ant-custom-import";
 import UploadModal from "./Buttons/Modals/UploadModal";
 import ButtonRefresh from "./Buttons/ButtonRefresh";
 import ButtonUpload from "./Buttons/ButtonUpload";
@@ -7,13 +10,14 @@ import ButtonClientNotification from "./Buttons/ButtonClientNotification";
 import ButtonHistoryProcces from "./Buttons/ButtonHistoryProcces";
 import Message from "./Buttons/Modals/Message/Message";
 import NotificationSellerModal from "./Buttons/Modals/NotificationSellerModal";
-import { Seller } from "../../interface/Entities";
+import { Seller ,Debt } from "../../interface/Entities";
 import HistoryProcessModal from "./Buttons/Modals/HistoryProcessModal";
-
+import NotificationClientsModal from "./Buttons/Modals/NotificacionClientModal";
 interface DebtControlButtonsProps {
   onRefreshDebts: () => Promise<void>;
   loadingDebts?: boolean;
   sellers: Seller[];
+  debts?: Debt[]; // Ajusta el tipo según tu entidad Debt
 }
 
 const containerStyle: React.CSSProperties = {
@@ -25,22 +29,25 @@ const containerStyle: React.CSSProperties = {
 const leftSectionStyle: React.CSSProperties = {
   width: "20%",
   display: "flex",
-  justifyContent: "start",
+  justifyContent: "flex-start", // corregido
   alignItems: "center",
 };
 
 const rightSectionStyle: React.CSSProperties = {
   width: "80%",
   display: "flex",
-  justifyContent: "end",
+  justifyContent: "flex-end", // corregido
   alignItems: "center",
   gap: "5px",
 };
+
+
 
 const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
   onRefreshDebts,
   loadingDebts = false,
   sellers,
+  debts,
 }) => {
   const [isUploadModalOpen, setIsUploadModalOpen] = React.useState(false);
   const [isNotificationSellerModalOpen, setIsNotificationSellerModalOpen] =
@@ -50,7 +57,8 @@ const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
 
   const [messageUpload, setMessageUpload] = React.useState<string | null>(null);
   const [messageVisible, setMessageVisible] = React.useState(false);
-  const [typeMessage, setTypeMessage] = React.useState<string>("success");
+  const [typeMessage, setTypeMessage] = React.useState<MessageType>("success");
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   const handleOpenUploadModal = React.useCallback(
     () => setIsUploadModalOpen(true),
@@ -77,12 +85,37 @@ const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
     []
   );
 
+
+  const clientsData = React.useMemo(
+    () =>
+      sellers.map((seller, idx) => ({
+        id: idx, // Genera un id único temporal
+        nombre: seller.vendedor,
+        email: seller.correo_vendedor,
+      })),
+    [sellers]
+  );
+
+  const handleOpenModal = React.useCallback(() => {
+    setIsModalOpen(true);
+  }, []);
+
+  const handleCloseModal = React.useCallback(() => {
+    setIsModalOpen(false);
+  }, []);
+
+  const handleConfirmSend = React.useCallback(() => {
+    // Aquí pones tu lógica de envío (backend, etc.)
+    console.log("Enviando correos a clientes...");
+    setIsModalOpen(false);
+  }, []);
+
   const handleClickRefresh = React.useCallback(() => {
     void onRefreshDebts();
   }, [onRefreshDebts]);
 
   const handleNotification = React.useCallback(
-    (message: string, type: string) => {
+    (message: string, type: MessageType) => {
       setMessageUpload(message);
       setTypeMessage(type);
       setMessageVisible(true);
@@ -106,7 +139,7 @@ const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
         <ButtonSellerNotification
           handleNotificationSellerModal={handleOpenNotificationSellerModal}
         />
-        <ButtonClientNotification />
+        <ButtonClientNotification onClick={handleOpenModal}  />
         <ButtonHistoryProcces
           handleOpenHistoryProcessModal={handleOpenHistoryProcessModal}
         />
@@ -126,6 +159,13 @@ const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
         openDialogHistoryProcess={isHistoryProcessModalOpen}
         onCloseHistoryProcess={handleCloseHistoryProcessModal}
       />
+      <NotificationClientsModal 
+                open={isModalOpen}
+                onClose={handleCloseModal}
+                onConfirm={handleConfirmSend}
+                debts={debts}
+                
+            />
       <Message
         visible={messageVisible}
         mensaje={messageUpload ?? ""}
