@@ -73,7 +73,7 @@ const DebtControlTable: React.FC<Props> = ({
         },
 
         { title: "Fecha", dataIndex: "fecha_proceso", key: "fecha_proceso" },
-        { title: "Código", dataIndex: "codigo", key: "codigo" },
+   
 
         {
             title: "Estado",

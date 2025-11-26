@@ -18,6 +18,7 @@ interface DebtControlButtonsProps {
   loadingDebts?: boolean;
   sellers: Seller[];
   debts?: Debt[]; // Ajusta el tipo según tu entidad Debt
+  fechaActualizacion?: string;
 }
 
 const containerStyle: React.CSSProperties = {
@@ -33,8 +34,14 @@ const leftSectionStyle: React.CSSProperties = {
   alignItems: "center",
 };
 
+const updateStyle: React.CSSProperties = {
+  width: "20%",
+  display: "flex",
+  justifyContent: "center", // corregido
+  alignItems: "center",
+};
 const rightSectionStyle: React.CSSProperties = {
-  width: "80%",
+  width: "60%",
   display: "flex",
   justifyContent: "flex-end", // corregido
   alignItems: "center",
@@ -48,6 +55,7 @@ const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
   loadingDebts = false,
   sellers,
   debts,
+  fechaActualizacion,
 }) => {
   const [isUploadModalOpen, setIsUploadModalOpen] = React.useState(false);
   const [isNotificationSellerModalOpen, setIsNotificationSellerModalOpen] =
@@ -134,6 +142,9 @@ const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
       <div style={leftSectionStyle}>
         <ButtonRefresh onRefresh={handleClickRefresh} loading={loadingDebts} />
       </div>
+      <div style={updateStyle}>
+        <p style={{ margin: 0, textAlign: "center" }}>Ultima actualización: {fechaActualizacion}</p>
+      </div>
       <div style={rightSectionStyle}>
         <ButtonUpload handleOpenUploadModal={handleOpenUploadModal} />
         <ButtonSellerNotification
@@ -164,6 +175,7 @@ const ButtonsControl: React.FC<DebtControlButtonsProps> = ({
                 onCloseNotificacionClient={handleCloseModal}
                 onConfirm={handleConfirmSend}
                 debts={debts}
+                onNotifyUpload={handleNotification}
                 
             />
       <Message

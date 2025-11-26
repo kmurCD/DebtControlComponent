@@ -35,7 +35,7 @@ export class DebtControlComponent implements ComponentFramework.ReactControl<IIn
      */
         public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {
         return React.createElement(
-            MainDebtControl
+            MainDebtControl ,{ context: context }
         );
             
     }

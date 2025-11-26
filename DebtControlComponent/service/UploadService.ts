@@ -1,10 +1,11 @@
 import axios from "axios";
-import { CONFIGDEV } from "./config";
+import { CONFIG } from "./config";
 import { serviceResponse } from "../interface/Entities";
 
 export const uploadFile = async (
   file: File,
-  email: string
+  email: string,
+  emailUser: string
 ): Promise<serviceResponse> => {
   function fileToBase64(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -17,10 +18,12 @@ export const uploadFile = async (
   const base64 = await fileToBase64(file);
 
   const response = await axios.post(
-    CONFIGDEV.uploadFile,
+    CONFIG.uploadFile,
     {
       File: base64,
       Email: email,
+      EmailUsuario: emailUser,
+      
     },
     {
       headers: { "Content-Type": "application/json" },

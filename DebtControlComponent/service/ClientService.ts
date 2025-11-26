@@ -1,6 +1,6 @@
-import { Debt, Seller } from "../interface/Entities";
+import { Debt, Seller  } from "../interface/Entities";
 import { ApiResponse } from "../interface/Entities";
-import { CONFIGDEV } from "./config";
+import { CONFIG } from "./config";
 import axios from "axios";
 
 export const getClients = async (): Promise<{
@@ -8,12 +8,14 @@ export const getClients = async (): Promise<{
     loading: boolean;
     error: string | null;
     Seller: Seller[];
+    fecha_actualizacion: string;
 }> => {
     try {
-        const r = await axios.get<ApiResponse>(CONFIGDEV.getClients);
+        const r = await axios.get<ApiResponse>(CONFIG.getClients);
         const c: Debt[] = r.data.clientes ? JSON.parse(r.data.clientes) as Debt[] : [];
         const v: Seller[] = r.data.vendedores ? JSON.parse(r.data.vendedores) as Seller[] : [];
-        return { Debts: c, loading: false, error: null, Seller: v };
+        const fecha_actualizacion: string = r.data.fecha_actualizacion ? r.data.fecha_actualizacion : "";
+        return { Debts: c, loading: false, error: null, Seller: v , fecha_actualizacion: fecha_actualizacion };
 
     } catch (e: unknown) {
         interface ErrorData {
@@ -25,6 +27,6 @@ export const getClients = async (): Promise<{
                 ? e.message
                 : "Error desconocido";
 
-        return { Debts: [], loading: false, error: msg, Seller: [] };
+        return { Debts: [], loading: false, error: msg, Seller: [], fecha_actualizacion: "" };
     }
 };

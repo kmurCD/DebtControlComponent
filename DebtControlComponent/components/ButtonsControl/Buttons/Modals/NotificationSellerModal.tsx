@@ -5,7 +5,6 @@ import { useState, useMemo, useCallback } from "react";
 import { Seller } from "../../../../interface/Entities";
 import { useNotification } from "../../../../hooks/useNotification";
 import "./ModalCSS.css";
-
 import type { MessageType } from '../../../../types/MessageType';
 interface ModalNotificationControlProps {
     sellers: Seller[];
@@ -42,7 +41,6 @@ const NotificationSellerModal: React.FC<ModalNotificationControlProps> = ({
     const [selectedSeller, setSelectedSeller] = useState<Seller | undefined>(
         undefined
     );
-
     const sellerOptions = useMemo(() =>
         sellers.map((seller) => ({
             value: seller.vendedor,
@@ -55,6 +53,7 @@ const NotificationSellerModal: React.FC<ModalNotificationControlProps> = ({
             // Fire-and-forget
             void startNotification();
             onNotifyUpload?.("Notificación enviada a todos los vendedores", "success");
+            console.log("Notificación enviada a todos los vendedores");
         } else if (typeNotification === 2) {
             if (!selectedSeller) {
                 onNotifyUpload?.(
@@ -66,7 +65,7 @@ const NotificationSellerModal: React.FC<ModalNotificationControlProps> = ({
             // Fire-and-forget
             void startNotification(
                 selectedSeller.correo_vendedor,
-                selectedSeller.vendedor
+                    selectedSeller.vendedor,
             );
             onNotifyUpload?.(
                 `Notificación enviada a: ${selectedSeller.vendedor}`,

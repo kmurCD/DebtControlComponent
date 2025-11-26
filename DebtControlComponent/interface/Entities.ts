@@ -1,11 +1,13 @@
 export interface ParsedData {
     deudas: Debt[];
     vendedores: Seller[];
+    
 }
 
 export interface ApiResponse {
     clientes: string;
     vendedores: string;
+    fecha_actualizacion: string;
 }
 
 export interface Seller {
@@ -30,6 +32,10 @@ export interface Debt {
 export interface serviceResponse {
     code: string;
     message: string;
+}
+
+export interface DateUpdate{
+    fecha_actualizacion: string;
 }
 
 export interface ApiHistoryResponse {

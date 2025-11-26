@@ -1,6 +1,6 @@
 import { HistoryProcess } from "../interface/Entities";
 import { ApiHistoryResponse } from "../interface/Entities";
-import { CONFIGDEV } from "./config";
+import { CONFIG } from "./config";
 import axios from "axios";
 
 export const getHistoryProcess = async (): Promise<{
@@ -9,7 +9,7 @@ export const getHistoryProcess = async (): Promise<{
     error: string | null;
 }> => {
     try {
-        const r = await axios.get<ApiHistoryResponse>(CONFIGDEV.getProcessHistory);
+        const r = await axios.get<ApiHistoryResponse>(CONFIG.getProcessHistory);
         const c: HistoryProcess[] = r.data.result ? JSON.parse(r.data.result) as HistoryProcess[] : [];
         console.log(r.data);
         return { historyProcess: c, loading: false, error: null };

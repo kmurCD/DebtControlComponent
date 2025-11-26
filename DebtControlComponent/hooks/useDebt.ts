@@ -1,12 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { getClients } from "../service/ClientService";
-import { Debt,Seller } from "../interface/Entities";
+import { Debt,Seller, } from "../interface/Entities";
 
 export const useDebts = () => {
   const [debts, setDebts] = useState<Debt[]>([]);
   const [sellers, setSellers] = useState<Seller[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [fechaActualizacion, setFechaActualizacion] = useState<string>("");
   const isFetchingRef = useRef(false);
 
   const fetchData = useCallback(async () => {
@@ -25,6 +26,7 @@ export const useDebts = () => {
       if (!result.error) {
         setDebts(result.Debts);
         setSellers(result.Seller);
+        setFechaActualizacion(result.fecha_actualizacion);
       } else {
         setError(result.error);
       }
@@ -40,5 +42,5 @@ export const useDebts = () => {
     void fetchData();
   }, [fetchData]);
 
-  return { debts, sellers, loading, error, refresh: fetchData };
+  return { debts, sellers, loading, error, fechaActualizacion, refresh: fetchData };
 };

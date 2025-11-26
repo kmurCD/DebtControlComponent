@@ -11,8 +11,8 @@ import {
 } from "../../../../ant-custom-icons-import";
 import { Debt } from "../../../../interface/Entities";
 import { useNotificationClients } from "../../../../hooks/useNotificationClients";
-
-// Definimos una interfaz básica para el Cliente (ajústala a tu entidad real)
+import { useUser } from "../../../../contexts/UserContext"; 
+import type { MessageType } from '../../../../types/MessageType';
 
 interface ModalNotificationClientsProps {
     openDialogNotificationClient: boolean;
@@ -20,11 +20,9 @@ interface ModalNotificationClientsProps {
     onConfirm?: () => void;
     debts?: Debt[];
     loading?: boolean;
-    onNotifyUpload?: (mensaje: string, type: string) => void;
-    userEmail?: string;
+    onNotifyUpload?: (mensaje: string, type: MessageType) => void;
 }
 
-// Elimina la destructuración de Text, usa Typography.Text directamente
 
 const NotificationClientsModal: React.FC<ModalNotificationClientsProps> = ({
     openDialogNotificationClient,
@@ -40,9 +38,10 @@ const NotificationClientsModal: React.FC<ModalNotificationClientsProps> = ({
         startNotificationClient,
     } = useNotificationClients();
 
+    const {userEmail} = useUser()
     const handleConfirm = React.useCallback(() => {
-        void startNotificationClient("josue.centella@transligra.pe");
-        onNotifyUpload?.("Notificación enviada a todos los vendedores", "success");
+        void startNotificationClient(userEmail);
+        onNotifyUpload?.("Notificación enviada a todos los Clientes", "success");
 
         onCloseNotificacionClient?.();
     }, [startNotificationClient, onNotifyUpload, onCloseNotificacionClient]);
