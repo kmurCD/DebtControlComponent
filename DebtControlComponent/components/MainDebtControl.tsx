@@ -34,7 +34,7 @@ const versionStyle: React.CSSProperties = {
 const MainDebtControl: React.FC<IMainDebtControlProps> = ({ context }) => {
     const userEmail = context.parameters.userEmail?.raw ?? "";
     // Versión manual - cambiar aquí
-    const VERSION = "1.0.0";
+    const VERSION = "1.0.2";
     const {
         debts,
         sellers,
