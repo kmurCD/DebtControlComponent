@@ -1,12 +1,15 @@
 import { useState, useCallback, useRef } from "react";
 import { notificationClients } from "../service/NotificationService";
+import { useUser } from "../contexts/UserContext";
 
 export const useNotificationClients = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const isFetchingRef = useRef(false);
 
-    const startNotificationClient = useCallback(async (userEmail?: string): Promise<boolean> => {
+        const { userEmail } = useUser();
+
+    const startNotificationClient = useCallback(async (): Promise<boolean> => {
         if (isFetchingRef.current) return false;
         isFetchingRef.current = true;
         setLoading(true);
@@ -17,7 +20,7 @@ export const useNotificationClients = () => {
             let result: string | { error?: string } = {};
 
             if (userEmail ) {
-                result = await notificationClients(userEmail);
+                result = await notificationClients(userEmail,);
             } 
 
             if ((result as { error?: string })?.error) {

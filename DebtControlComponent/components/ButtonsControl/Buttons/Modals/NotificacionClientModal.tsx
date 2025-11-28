@@ -11,7 +11,6 @@ import {
 } from "../../../../ant-custom-icons-import";
 import { Debt } from "../../../../interface/Entities";
 import { useNotificationClients } from "../../../../hooks/useNotificationClients";
-import { useUser } from "../../../../contexts/UserContext"; 
 import type { MessageType } from '../../../../types/MessageType';
 
 interface ModalNotificationClientsProps {
@@ -38,9 +37,8 @@ const NotificationClientsModal: React.FC<ModalNotificationClientsProps> = ({
         startNotificationClient,
     } = useNotificationClients();
 
-    const {userEmail} = useUser()
     const handleConfirm = React.useCallback(() => {
-        void startNotificationClient(userEmail);
+        void startNotificationClient();
         onNotifyUpload?.("Notificación enviada a todos los Clientes", "success");
 
         onCloseNotificacionClient?.();
